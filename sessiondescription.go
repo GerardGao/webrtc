@@ -5,8 +5,6 @@ package webrtc
 
 import (
 	"fmt"
-	"slices"
-	"strings"
 
 	"github.com/pion/sdp/v3"
 )
@@ -54,22 +52,4 @@ func (sd *SessionDescription) Unmarshal() (*sdp.SessionDescription, error) {
 	}
 
 	return sd.parsed, nil
-}
-
-func hasICETrickleOption(desc *sdp.SessionDescription) bool {
-	if value, ok := desc.Attribute(sdp.AttrKeyICEOptions); ok && hasTrickleOptionValue(value) {
-		return true
-	}
-
-	for _, media := range desc.MediaDescriptions {
-		if value, ok := media.Attribute(sdp.AttrKeyICEOptions); ok && hasTrickleOptionValue(value) {
-			return true
-		}
-	}
-
-	return false
-}
-
-func hasTrickleOptionValue(value string) bool {
-	return slices.Contains(strings.Fields(value), "trickle")
 }

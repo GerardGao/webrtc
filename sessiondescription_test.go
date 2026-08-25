@@ -139,7 +139,7 @@ func TestHasICETrickleOption(t *testing.T) {
 			desc := SessionDescription{Type: SDPTypeOffer, SDP: tc.sdp}
 			_, err := desc.Unmarshal()
 			assert.NoError(t, err)
-			assert.Equal(t, tc.expected, hasICETrickleOption(desc.parsed))
+			assert.Equal(t, tc.expected, desc.parsed.HasICEOption("trickle"))
 		})
 	}
 }
